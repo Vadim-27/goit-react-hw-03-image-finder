@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import css from "./seafchbar.module.css"
 
 class Searchbar extends Component {
     state = {
@@ -23,17 +24,17 @@ class Searchbar extends Component {
         const { search } = this.state;
         const { handleChange, handleSubmit } = this;
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={handleSubmit}>
-          {/* <button type="submit" class="button">
-            <span class="button-label">Search</span>
-          </button> */}
+      <header className={css.searchbar}>
+        <form className={css.searchForm} onSubmit={handleSubmit}>
+          <button type="submit" className={css.searchFormButton}>
+            <span className={css.searchFormButtonLabel}>Search</span>
+          </button>
 
           <input
             value={search}
             name="search"
             onChange={handleChange}
-            // class="input"
+            className={css.searchFormiInput}
             type="text"
             autocomplete="off"
             autofocus

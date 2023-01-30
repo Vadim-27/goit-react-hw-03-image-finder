@@ -1,9 +1,12 @@
 import { Component } from "react";
 import searchImages from "components/servises/gallery-api";
 
+import Modal from "components/Modal/Modal";
+
 // import { searchImages } from "../../components/servises/gallery-api.js";
 
 import Searchbar from "./Searchbar/Searchbar";
+
 
 class MyGallery extends Component {
   state = {
@@ -12,6 +15,7 @@ class MyGallery extends Component {
     page: 1,
     error: null,
     loading: false,
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -27,14 +31,16 @@ class MyGallery extends Component {
     try {
       this.setState({ loading: true });
       const { search, page } = this.state;
-      const data = await searchImages(search, page);
+        const data = await searchImages(search, page);
+        console.log(data);
       // this.setState(({ items }) => ({ items: [...items, ...data] }));
-      this.setState(({ items }) => ({ items: [...items, ...data] }));
+        this.setState(({ items }) => ({ items: [...items, ...data.hits] }));
+        
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
-      console.log(this.state.items);
+      
     }
   }
 
@@ -60,7 +66,8 @@ class MyGallery extends Component {
         <ul>
           <li>{picture}</li>
         </ul>
-        <button>load more</button>
+            <button>load more</button>
+            <Modal/>
       </div>
     );
   }

@@ -17,7 +17,7 @@ const instanse = axios.create({
             orientation: 'horizontal',
         }
     });
-    console.log(data);
+    
     return data;
 }
 export default searchImages;
