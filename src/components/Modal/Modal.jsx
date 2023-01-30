@@ -3,8 +3,8 @@ import { Component } from "react";
 import { createPortal } from "react-dom";
 
 
-import css from "./modal.module.css"
-const modalRoot = document.querySelector('#modal-root');
+// import css from "./modal.module.css"
+// const modalRoot = document.querySelector('#modal-root');
 
 
 

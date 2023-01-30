@@ -1,7 +1,7 @@
 import { Component } from "react";
 import searchImages from "components/servises/gallery-api";
 
-import Modal from "components/Modal/Modal";
+// import Modal from "components/Modal/Modal";
 
 // import { searchImages } from "../../components/servises/gallery-api.js";
 
@@ -67,7 +67,7 @@ class MyGallery extends Component {
           <li>{picture}</li>
         </ul>
             <button>load more</button>
-            <Modal/>
+            {/* <Modal/> */}
       </div>
     );
   }
