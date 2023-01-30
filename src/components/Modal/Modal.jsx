@@ -1,9 +1,9 @@
 // import { Children } from "react";
 import { Component } from "react";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 
 
-// import css from "./modal.module.css"
+import css from "./modal.module.css"
 // const modalRoot = document.querySelector('#modal-root');
 
 
