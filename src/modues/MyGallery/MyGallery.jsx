@@ -1,7 +1,10 @@
 import { Component } from "react";
-import searchImages from "components/servises/gallery-api";
+import searchImages from "components/services/gallery-api";
 
-// import Modal from "components/Modal/Modal";
+import Modal from "components/Modal/Modal";
+import ImageGallery from "./ImageGallery/ImageGallery";
+import Button from "components/Button/Button";
+import Loader from "components/Loader/Loader";
 
 // import { searchImages } from "../../components/servises/gallery-api.js";
 
@@ -16,14 +19,15 @@ class MyGallery extends Component {
     error: null,
     loading: false,
     showModal: false,
+    imageDetails: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
     const { search, page } = this.state;
-    // this.fetchImg();
+    
     if (prevState.search !== search || prevState.page !== page) {
       this.fetchImg();
-      console.log(this.fetchImg());
+      
     }
   }
 
@@ -31,16 +35,14 @@ class MyGallery extends Component {
     try {
       this.setState({ loading: true });
       const { search, page } = this.state;
-        const data = await searchImages(search, page);
-        console.log(data);
-      // this.setState(({ items }) => ({ items: [...items, ...data] }));
-        this.setState(({ items }) => ({ items: [...items, ...data.hits] }));
-        
+      const data = await searchImages(search, page);
+      
+    
+      this.setState(({ items }) => ({ items: [...items, ...data.hits] }));
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
-      
     }
   }
 
@@ -48,26 +50,37 @@ class MyGallery extends Component {
     this.setState({ search, items: [], page: 1 });
   };
 
-  render() {
-    const { searchPictures, error } = this;
-    const { items } = this.state;
+  loadMore = () => {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  };
 
-    const picture = items.map(({ id, largeImageURL }) => (
-      <li key={id}>
-        <img src={largeImageURL} alt="" />
-      </li>
-    ));
-    console.log(picture);
+    showImage = largeImageURL => {
+        this.setState({ showModal: true, imageDetails: largeImageURL });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
+  render() {
+    const { searchPictures, error, loadMore, closeModal, showImage } = this;
+    const { items, showModal, imageDetails, loading } = this.state;
+
+    
 
     return (
       <div>
         <Searchbar onSubmit={searchPictures} />
+        {loading && <Loader />}
         {error && <p>{error}</p>}
-        <ul>
-          <li>{picture}</li>
-        </ul>
-            <button>load more</button>
-            {/* <Modal/> */}
+        <ImageGallery items={items} showImage={showImage} />
+        {Boolean(items.length)&&<Button onLoadMore={loadMore} />}
+
+        {showModal && (
+          <Modal close={closeModal}>
+            <img src={imageDetails} alt="" />
+          </Modal>
+        )}
       </div>
     );
   }
