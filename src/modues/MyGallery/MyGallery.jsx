@@ -72,7 +72,7 @@ class MyGallery extends Component {
         {loading && <Loader />}
         {error && <p>{error}</p>}
         <ImageGallery items={items} showImage={showImage} />
-        {isImages && page > totalPage && <Button onLoadMore={loadMore} />}
+        {isImages && page < totalPage && <Button onLoadMore={loadMore} />}
 
         {showModal && (
           <Modal close={closeModal}>
