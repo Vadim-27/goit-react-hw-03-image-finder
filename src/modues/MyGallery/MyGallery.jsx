@@ -9,6 +9,7 @@ import Loader from 'components/Loader/Loader';
 // import { searchImages } from "../../components/servises/gallery-api.js";
 
 import Searchbar from './Searchbar/Searchbar';
+import css from "./my-gallery.module.css";
 
 class MyGallery extends Component {
   state = {
@@ -19,6 +20,7 @@ class MyGallery extends Component {
     loading: false,
     showModal: false,
     imageDetails: '',
+    total: 0,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,15 +63,16 @@ class MyGallery extends Component {
 
   render() {
     const { searchPictures, error, loadMore, closeModal, showImage } = this;
-    const { items, showModal, imageDetails, loading } = this.state;
-
+    const { items, showModal, imageDetails, loading, total, page } = this.state;
+    const isImages = Boolean(items.length);
+    const totalPage = Math.ceil(total / 12);
     return (
-      <div>
+      <div className={css.wrapper}>
         <Searchbar onSubmit={searchPictures} />
         {loading && <Loader />}
         {error && <p>{error}</p>}
         <ImageGallery items={items} showImage={showImage} />
-        {Boolean(items.length) && <Button onLoadMore={loadMore} />}
+        {isImages && page > totalPage && <Button onLoadMore={loadMore} />}
 
         {showModal && (
           <Modal close={closeModal}>

@@ -22,7 +22,7 @@ class Modal extends Component {
     return createPortal(
       <div className={css.overlay} onClick={closeModal}>
         <div className={css.modal}>{children}</div>
-        {children}
+        
       </div>,
       modalRoot
     );

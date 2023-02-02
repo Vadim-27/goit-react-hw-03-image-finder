@@ -3,7 +3,7 @@ import axios from 'axios';
 const instanse = axios.create({
     baseURL: 'https://pixabay.com/api/',
     params: {
-        per_page: 6,
+        per_page: 12,
         key: '32251889-012bd425bd22f22695bb0cdce',
     }
 })

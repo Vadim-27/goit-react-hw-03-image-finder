@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import css from './seafchbar.module.css';
 
+import { FcSearch } from 'react-icons/fc';
+
 class Searchbar extends Component {
   state = {
     search: '',
@@ -12,6 +14,9 @@ class Searchbar extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
+    if (!this.state.search.trim()) {
+      return alert(`Enter your query in the search bar`);
+    }
     const { onSubmit } = this.props;
     onSubmit({ ...this.state });
     this.reset();
@@ -28,7 +33,7 @@ class Searchbar extends Component {
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={handleSubmit}>
           <button type="submit" className={css.searchFormButton}>
-            <span className={css.searchFormButtonLabel}>Search</span>
+            <span className={css.searchFormButtonLabel}><FcSearch  /></span>
           </button>
 
           <input
