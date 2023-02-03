@@ -6,10 +6,10 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from 'components/Button/Button';
 import Loader from 'components/Loader/Loader';
 
-// import { searchImages } from "../../components/servises/gallery-api.js";
+
 
 import Searchbar from './Searchbar/Searchbar';
-import css from "./my-gallery.module.css";
+import css from './my-gallery.module.css';
 
 class MyGallery extends Component {
   state = {
@@ -37,7 +37,7 @@ class MyGallery extends Component {
       const { search, page } = this.state;
       const data = await searchImages(search, page);
 
-      this.setState(({ items }) => ({ items: [...items, ...data.hits] }));
+      this.setState(({ items }) => ({ items: [...items, ...data.hits], total: data.totalHits }));
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
@@ -64,15 +64,15 @@ class MyGallery extends Component {
   render() {
     const { searchPictures, error, loadMore, closeModal, showImage } = this;
     const { items, showModal, imageDetails, loading, total, page } = this.state;
-    const isImages = Boolean(items.length);
-    const totalPage = Math.ceil(total / 12);
+  
+    const totalPage = total / (page * items.length);
     return (
       <div className={css.wrapper}>
         <Searchbar onSubmit={searchPictures} />
         {loading && <Loader />}
         {error && <p>{error}</p>}
         <ImageGallery items={items} showImage={showImage} />
-        {isImages && page < totalPage && <Button onLoadMore={loadMore} />}
+        {totalPage > 1 && <Button onLoadMore={loadMore} />}
 
         {showModal && (
           <Modal close={closeModal}>

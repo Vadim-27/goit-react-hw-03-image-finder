@@ -32,4 +32,5 @@ export default Modal;
 
 Modal.propTypes = {
   children: PropTypes.element,
+  close: PropTypes.func.isRequired,
 };
